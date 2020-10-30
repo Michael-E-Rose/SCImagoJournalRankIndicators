@@ -55,6 +55,7 @@ def read_file(fname):
 def main():
     files = sorted(glob(SOURCE_FOLDER + "*.csv"))
     out = pd.concat([read_file(f) for f in files], axis=0)
+    out["SJR"] = out["SJR"].round(3)
     out = out.rename(columns={'H index': 'h-index',
                      'Cites / Doc. (2years)': 'avg_citations'})
     out.to_csv(TARGET_FILE)
