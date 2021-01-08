@@ -11,7 +11,8 @@ import pandas as pd
 SOURCE_FOLDER = "./raw_data/"
 TARGET_FILE = "./compiled/Scimago_JIFs.csv"
 
-ASJC_FIELD_MAP = {"Agricultural and Biological Sciences": 1100,
+ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
+    "Agricultural and Biological Sciences": 1100,
     "Arts and Humanities": 1200,
     "Biochemistry, Genetics and Molecular Biology": 1300,
     "Business, Management and Accounting": 1400,
