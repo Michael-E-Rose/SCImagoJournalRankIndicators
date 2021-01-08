@@ -10,23 +10,26 @@ In folder [compiled/](./compiled/) you find the file you are looking for: A long
 
 Usage in your scripts is easy:
 
-* In python (using pandas):
+* In *python* (using pandas):
 ```python
 import pandas as pd
 url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv'
 df = pd.read_csv(url)
 ```
 
-* In R:
+* In *R*:
 ```R
 url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv'
 df <- read.csv(url)
 ```
 
-* In Stata:
+* In *Stata*:
 ```Stata
 insheet using "https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv"
 ```
+
+### Note
+Journals will be listed multiple times when they belong to multiple ASJC fields. But their metrics are the same, so you can safely drop Sourceid-year duplicates.
 
 ## What's the benefit?
 - Central and continuously updated online storage for seamless inclusion in local scripts.
