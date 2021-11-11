@@ -1,8 +1,8 @@
-# ScimagoJournalImpactFactors
-Scimago Impact Factors for all Journals in all fields since 1999
+# SCImagoJournalRankIndicators
+SCImago Journal Rank Indicators for all Journals in all fields since 1999
 
 ## What is this?
-To ease the use of measures of Journal Quality in my research, I have compiled a panel dataset using the yearly Scimago Journal Impact Factors.  These data originate from https://www.scimagojr.com/journalrank.php and date back to 1999.  In June 2018 I made the data public so that everyone can use them freely and conveniently via internet.
+To ease the use of measures of Journal Quality in my research, I have compiled a panel dataset using the yearly Scimago Journal Impact Factors.  These data originate from https://www.scimagojr.com/journalrank.php and date back to 1999.  In June 2018 I made the data public so that everyone can use them freely and conveniently via http.
 
 ## How do I use this?
 
@@ -26,6 +26,7 @@ df <- read.csv(url)
 * In *Stata*:
 ```Stata
 insheet using "https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv"
+>>>>>>> b5a3b411215c11ec88e904dbb44f32e7d2d8fa67
 ```
 
 ### Note
