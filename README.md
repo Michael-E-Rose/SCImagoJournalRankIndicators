@@ -6,26 +6,26 @@ To ease the use of measures of Journal Quality in my research, I have compiled a
 
 ## How do I use this?
 
-In folder [compiled/](./compiled/) you find the file you are looking for: A long list of Journals with their yearly SJR (Scimago Journal Rank), the h-index and avgerage citations.  All of them are measured using articles from the previous three years.  The file is a simple csv file.
+In this folder you find the file you are looking for: A long list of journals with their yearly SJR (SCImago Journal Rank), the h-index and avgerage citations.  All of them are measured using articles from the previous three years.  The file is a simple csv file.
 
 Usage in your scripts is easy:
 
 * In *python* (using pandas):
 ```python
 import pandas as pd
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv'
+url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv'
 df = pd.read_csv(url)
 ```
 
 * In *R*:
 ```R
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv'
+url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv'
 df <- read.csv(url)
 ```
 
 * In *Stata*:
 ```Stata
-insheet using "https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/compiled/Scimago_JIFs.csv"
+insheet using "https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv"
 ```
 
 ### Note

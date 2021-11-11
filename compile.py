@@ -9,7 +9,7 @@ from os.path import basename, splitext
 import pandas as pd
 
 SOURCE_FOLDER = "./raw_data/"
-TARGET_FILE = "./compiled/Scimago_JIFs.csv"
+TARGET_FILE = "./Scimago_JIFs.csv"
 
 ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Agricultural and Biological Sciences": 1100,
