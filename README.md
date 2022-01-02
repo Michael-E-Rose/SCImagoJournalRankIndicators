@@ -13,19 +13,19 @@ Usage in your scripts is easy:
 * In *python* (using pandas):
 ```python
 import pandas as pd
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv'
+url = 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/Scimago_JIFs.csv'
 df = pd.read_csv(url)
 ```
 
 * In *R*:
 ```R
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv'
+url = 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/Scimago_JIFs.csv'
 df <- read.csv(url)
 ```
 
 * In *Stata*:
 ```Stata
-insheet using "https://raw.githubusercontent.com/Michael-E-Rose/ScimagoJournalImpactFactors/master/Scimago_JIFs.csv"
+insheet using "https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/Scimago_JIFs.csv"
 >>>>>>> b5a3b411215c11ec88e904dbb44f32e7d2d8fa67
 ```
 
