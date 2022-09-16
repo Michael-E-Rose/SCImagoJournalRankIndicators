@@ -3,13 +3,13 @@
 #           Carolin Formella
 """Creates a long file of yearly Journal Impact Factors."""
 
-from glob import glob
-from os.path import basename, splitext
+from pathlib import Path
 
 import pandas as pd
+from tqdm import tqdm
 
-SOURCE_FOLDER = "./raw_data/"
-TARGET_FILE = "./Scimago_JIFs.csv"
+SOURCE_FOLDER = Path("./raw_data/")
+TARGET_FILE = Path("./Scimago_JIFs.csv")
 
 ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Agricultural and Biological Sciences": 1100,
@@ -45,8 +45,8 @@ def read_file(fname):
     df = pd.read_csv(fname, index_col=2, sep=";")
     df.index.name = "Title"
     df = df[df['Type'] == 'journal']
-    df['year'] = fname.split()[1]
-    field = splitext(basename(fname))[0].split(" - ")[-1]
+    _, year, _, _, _, field = fname.stem.split(maxsplit=5)
+    df['year'] = int(year)
     df['field'] = ASJC_FIELD_MAP[field]
     order = ['field', 'year', 'SJR', 'H index', 'Cites / Doc. (2years)',
              'Issn', 'Sourceid']
@@ -54,8 +54,8 @@ def read_file(fname):
 
 
 def main():
-    files = sorted(glob(SOURCE_FOLDER + "*.csv"))
-    out = pd.concat([read_file(f) for f in files], axis=0)
+    files = list(SOURCE_FOLDER.glob("*.csv"))
+    out = pd.concat([read_file(f) for f in tqdm(files)], axis=0)
     out["SJR"] = out["SJR"].round(3)
     out = out.rename(columns={'H index': 'h-index',
                      'Cites / Doc. (2years)': 'avg_citations'})
