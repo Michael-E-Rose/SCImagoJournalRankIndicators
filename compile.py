@@ -9,7 +9,7 @@ import pandas as pd
 from tqdm import tqdm
 
 SOURCE_FOLDER = Path("./raw_data/")
-TARGET_FILE = Path("./Scimago_JIFs.csv")
+TARGET_FILE = Path("./all.csv")
 
 ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Agricultural and Biological Sciences": 1100,
