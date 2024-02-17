@@ -3,11 +3,13 @@
 #           Carolin Formella
 """Creates a long file of yearly Journal Impact Factors."""
 
+import time
+from io import StringIO
 from pathlib import Path
+
 import pandas as pd
 import requests
-from io import StringIO
-import time
+from tqdm import tqdm
 
 TARGET_FILE = Path("./all.csv")
 
@@ -42,10 +44,10 @@ ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Social Sciences": 3300,
     "Veterinary": 3400}
 
-def get_file(year):
-    """Fetch and process journal impact factors for a given year."""
+def get_file(year, delay = 1):
+    """Fetch an process Scimago Journal Ranks for a given year."""
 
-    time.sleep(1)
+    time.sleep(delay)
 
     try:
         response = requests.get(f"https://www.scimagojr.com/journalrank.php?year={year}&out=xls")
@@ -54,7 +56,7 @@ def get_file(year):
         print(f"Failed to download data for year {year}: {e}")
         return None
 
-    df = pd.read_csv(StringIO(response.text), delimiter=';', dtype={5: str, 'Issn':str})
+    df = pd.read_csv(StringIO(response.text), delimiter=';', dtype={5: str, 'Issn': str})
 
     df = df[df['Type'] == 'journal']
     df["SJR"] = df["SJR"].str.replace(',', '.').astype(float).round(3)
@@ -71,7 +73,7 @@ def get_file(year):
     return df[order]
 
 def main():
-    data_frames = [get_file(year) for year in range(START_YEAR, END_YEAR+1)]
+    data_frames = [get_file(year) for year in tqdm(range(START_YEAR, END_YEAR+1))]
     pd.concat(data_frames, ignore_index=True).to_csv(TARGET_FILE, index=False)
 
 if __name__ == '__main__':
