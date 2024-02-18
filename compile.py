@@ -3,13 +3,18 @@
 #           Carolin Formella
 """Creates a long file of yearly Journal Impact Factors."""
 
+import time
+from io import StringIO
 from pathlib import Path
 
 import pandas as pd
+import requests
 from tqdm import tqdm
 
-SOURCE_FOLDER = Path("./raw_data/")
 TARGET_FILE = Path("./all.csv")
+
+START_YEAR = 1999
+END_YEAR = 2022
 
 ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Agricultural and Biological Sciences": 1100,
@@ -32,35 +37,44 @@ ASJC_FIELD_MAP = {"Multidisciplinary": 1000,
     "Medicine": 2700,
     "Mathematics": 2600,
     "Neuroscience": 2800,
-    "Nursing": 2900, 
+    "Nursing": 2900,
     "Pharmacology, Toxicology and Pharmaceutics": 3000,
     "Physics and Astronomy": 3100,
     "Psychology": 3200,
     "Social Sciences": 3300,
     "Veterinary": 3400}
 
+def get_file(year, delay = 1):
+    """Fetch an process Scimago Journal Ranks for a given year."""
 
-def read_file(fname):
-    """Read individual file with Journal Impact Factors."""
-    df = pd.read_csv(fname, index_col=2, sep=";")
-    df.index.name = "Title"
+    time.sleep(delay)
+
+    try:
+        response = requests.get(f"https://www.scimagojr.com/journalrank.php?year={year}&out=xls")
+        response.raise_for_status()  # Raises HTTPError for bad responses
+    except requests.RequestException as e:
+        print(f"Failed to download data for year {year}: {e}")
+        return None
+
+    df = pd.read_csv(StringIO(response.text), delimiter=';', dtype={5: str, 'Issn': str})
+
     df = df[df['Type'] == 'journal']
-    _, year, _, _, _, field = fname.stem.split(maxsplit=5)
-    df['year'] = int(year)
-    df['field'] = ASJC_FIELD_MAP[field]
-    order = ['field', 'year', 'SJR', 'H index', 'Cites / Doc. (2years)',
+    df["SJR"] = df["SJR"].str.replace(',', '.').astype(float).round(3)
+    df["Cites / Doc. (2years)"] = df["Cites / Doc. (2years)"].str.replace(',', '.').astype(float)
+    df['year'] = year
+    df['Areas'] = df['Areas'].str.split('; ')
+    df = df.explode('Areas')
+    df = df.rename(columns={'H index': 'h-index',
+                            'Areas' : 'field',
+                            'Cites / Doc. (2years)': 'avg_citations'})
+    df['field'] = df['field'].map(ASJC_FIELD_MAP)
+    order = ['Title','field', 'year', 'SJR', 'h-index', 'avg_citations',
              'Issn', 'Sourceid']
     return df[order]
 
-
 def main():
-    files = list(SOURCE_FOLDER.glob("*.csv"))
-    out = pd.concat([read_file(f) for f in tqdm(files)], axis=0)
-    out["SJR"] = out["SJR"].round(3)
-    out = out.rename(columns={'H index': 'h-index',
-                     'Cites / Doc. (2years)': 'avg_citations'})
-    out.to_csv(TARGET_FILE)
-
+    data_frames = [get_file(year) for year in tqdm(range(START_YEAR, END_YEAR+1))]
+    pd.concat(data_frames, ignore_index=True).to_csv(TARGET_FILE, index=False)
 
 if __name__ == '__main__':
     main()
