@@ -37,11 +37,11 @@ def get_file(year, delay=1):
     # Parse file
     df = df[df['Type'] == 'journal']
     df["SJR"] = df["SJR"].str.replace(',', '.').astype(float).round(3)
-    df["Cites / Doc. (2years)"] = df["Cites / Doc. (2years)"].str.replace(',', '.').astype(float)
+    df["Citations / Doc. (2years)"] = df["Citations / Doc. (2years)"].str.replace(',', '.').astype(float)
     df['Areas'] = df['Areas'].str.split('; ')
     df = df.explode('Areas')
     rename = {'H index': 'h-index', 'Areas': 'field',
-              'Cites / Doc. (2years)': 'avg_citations'}
+              'Citations / Doc. (2years)': 'avg_citations'}
     df = df.rename(columns=rename)
     df['year'] = year
     order = ['Title', 'field', 'year', 'SJR', 'h-index', 'avg_citations',
@@ -51,7 +51,7 @@ def get_file(year, delay=1):
 
 if __name__ == '__main__':
     # Get file
-    df = pd.concat([get_file(y) for y in tqdm(range(START_YEAR, END_YEAR+1))],
+    df = pd.concat([get_file(y) for y in tqdm(range(START_YEAR, END_YEAR))],
                    ignore_index=True)
 
     # Change field names
