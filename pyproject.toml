@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "scimago-journal-rank-indicators"
+version = "0.1.0"
+description = "SCImago Journal Rank indicators for all Scopus journals since 1999"
+readme = "README.md"
+requires-python = ">=3.8"
+license = { text = "MIT" }
+
+authors = [
+  { name = "Michael E. Rose" }
+]
+
+keywords = [
+  "SCImago",
+  "SJR",
+  "journal metrics",
+  "Scopus",
+  "bibliometrics",
+  "scientometrics"
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "License :: OSI Approved :: MIT License",
+  "Intended Audience :: Science/Research",
+  "Topic :: Scientific/Engineering :: Information Analysis",
+  "Topic :: Scientific/Engineering :: Information Retrieval"
+]
+
+dependencies = [
+  "pandas>=2.3",
+  "pyyaml>=6.0.2",
+  "requests>=2.32.3",
+  "tqdm>=4.67.1"
+]
+
+[project.urls]
+Homepage = "https://michael-e-ro.se/"
+Repository = "https://github.com/Michael-E-Rose/SCImagoJournalRankIndicators"
+Issues = "https://github.com/Michael-E-Rose/SCImagoJournalRankIndicators/issues"
