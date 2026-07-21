@@ -11,7 +11,8 @@ from playwright.sync_api import sync_playwright
 from tqdm import tqdm
 from yaml import safe_load
 
-TARGET_FILE = Path("./all.csv")
+TARGET_CSV = Path("./all.csv")
+TARGET_PARQUET = Path("./all.parquet")
 
 START_YEAR = 1999
 END_YEAR = time.localtime().tm_year  # Or override manually
@@ -87,10 +88,16 @@ if __name__ == '__main__':
     df = pd.concat([get_file(session, y) for y in tqdm(range(START_YEAR, END_YEAR))],
                    ignore_index=True)
 
-    # Change field names
+    # Change field names and optimise dtypes
     field_map = load_asjc_field_map()
-    df['field'] = df['field'].map(field_map)
+    df['field'] = df['field'].map(field_map).astype("uint16")
+    df["year"] = df["year"].astype("uint16")
+    df["SJR"] = df["SJR"].astype("float32")
+    df["h-index"] = df["h-index"].astype("uint16")
+    df["avg_citations"] = df["avg_citations"].astype("float32")
+    df["Sourceid"] = df["Sourceid"].astype("uint32")
 
     # Write out
     df = df.sort_values(["field", "Title", "year"])
-    df.to_csv(TARGET_FILE, index=False)
+    df.to_csv(TARGET_CSV, index=False)
+    df.to_parquet(TARGET_PARQUET, index=False, engine="pyarrow")

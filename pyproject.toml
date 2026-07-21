@@ -36,6 +36,7 @@ dependencies = [
   "curl-cffi>=0.15",
   "pandas>=3.0",
   "playwright>=1.61",
+  "pyarrow>=19.0",
   "pyyaml>=6.0.2",
   "tqdm>=4.67.1"
 ]

@@ -6,26 +6,29 @@ To ease the use of measures of Journal Quality in my research, I have compiled a
 
 ## How do I use this?
 
-In this folder you find the file you are looking for: A long list of journals with their yearly SJR (SCImago Journal Rank), the h-index and avgerage citations.  All of them are measured using articles from the previous three years.  The file is a simple csv file.
+The dataset is available in two formats:
+- **`all.parquet`** — Parquet file with optimised dtypes, small and fast to read.
+- **`all.csv`** — CSV file, for broad compatibility. **The CSV file will be discontinued in 2028.** Please migrate to the Parquet format before then.
 
 Usage in your scripts is easy:
 
 * In *python* (using pandas):
 ```python
 import pandas as pd
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.csv'
-df = pd.read_csv(url)
+url = 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.parquet'
+df = pd.read_parquet(url)
 ```
 
-* In *R*:
+* In *R* (using arrow):
 ```R
-url = 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.csv'
-df <- read.csv(url)
+library(arrow)
+url <- 'https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.parquet'
+df <- read_parquet(url)
 ```
 
-* In *Stata*:
+* In *Stata* (using parquet package):
 ```Stata
-insheet using "https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.csv"
+parquet use "https://raw.githubusercontent.com/Michael-E-Rose/SCImagoJournalRankIndicators/master/all.parquet"
 ```
 
 ### Note
